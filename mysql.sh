@@ -48,3 +48,4 @@ then
     VALIDATA $? "Mysql root password setup"
 else
     echo -e "Mysql root password is already setup..$y SkIPPING $N"
+fi
