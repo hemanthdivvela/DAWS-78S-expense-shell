@@ -32,13 +32,13 @@ else
 fi
 
 dnf install nginx -y &>>$LOGFILE
-VALIDATA $? "Installing nginx"
+VALIDATE $? "Installing nginx"
 
 systemctl enable nginx &>>$LOGFILE
-VALIDATA $? "Enable nginx"
+VALIDATE $? "Enabling nginx"
 
 systemctl start nginx &>>$LOGFILE
-VALIDATA $? "start nginx"
+VALIDATE $? "Starting nginx"
 
 rm -rf /usr/share/nginx/html/* &>>$LOGFILE
 VALIDATA $? "Removing exjecting content"
