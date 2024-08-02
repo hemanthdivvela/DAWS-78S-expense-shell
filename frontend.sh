@@ -50,7 +50,7 @@ cd /usr/share/nginx/html &>>$LOGFILE
 unzip /tmp/frontend.zip &>>$LOGFILE
 VALIDATA $? "extracting frontend code"
 # check repo and path
-cp /home/ec2-user/DAWS-78S-expense-shell.expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
+cp /home/ec2-user/DAWS-78S-expense-shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
 VALIDATA $? "Copied expense conf"
 
 systemctl restart nginx &>>$LOGFILE
