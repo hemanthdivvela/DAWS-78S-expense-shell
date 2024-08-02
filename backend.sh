@@ -37,6 +37,7 @@ VALIDATA $? "module enable node"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATA $? "install nodejs."
 
+
 id expense
 if [$? -ne 0 ]
 then
