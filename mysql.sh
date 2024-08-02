@@ -13,7 +13,6 @@ N="\e[0m"
 echo "Please enter DB PASSWORD:"
 read -s mysql_root_password
 
-
 VALIDATE(){
     if [ $1 -ne 0 ]
     then 
