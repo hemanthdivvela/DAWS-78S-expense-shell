@@ -37,6 +37,6 @@ VALIDATA $? "module enable node"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATA $? "install nodejs."
 
-useradd expense &>>$LOGFILE
+useradd expense 
 VALIDATA $? "creating expense user"
 
