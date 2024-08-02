@@ -5,6 +5,9 @@ TIMESTAMP=$(date +%F-%H-%M-%S)
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOGFILE=/tmp/$SCRIPT_NAME-$TIMESTAMP.log
 
+echo "Please enter DB password:"
+read mysql_root_password
+
 R="\e[31m"
 G="\e[32m"
 N="\e[0m"
@@ -46,4 +49,39 @@ then
 else
     echo -e "Expense user already created...$Y SKPPING $N"
 fi
+
+mkdir -p /app
+VALIDATA $? "Creating app directory"
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+VALIDATA $? "Download backend code"
+
+cd /app
+unzip /tmp/backend.zip
+VALIDATA $? "Extracted backend code"
+
+npm install
+VALIDATA $? "Installing npm dependings"
+ 
+cp /home/ec2-user/DAWS-78S-expense-shell/backend.service  /etc/systemd/system/backend.service
+VALIDATA $? "copied bankend service"
+
+systemctl daemon-reload &>>$LOGFILE
+VALIDATA $? "Daemon Reload"
+
+systemctl start backend &>>$LOGFILE
+VALIDATA $? "Starting backend"
+
+systemctl enable backend &>>$LOGFILE
+VALIDATA $? "Enable backend"
+
+dnf install mysql -y &>>$LOGFILE
+VALIDATA $? "Installing mysql client"
+
+mysql -h db.dwas-78s.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+VALIDATA $? "Schema loading"
+
+systemctl restart backend &>>$LOGFILE
+VALIDATA $? "Resrarting Backend"
+
 
