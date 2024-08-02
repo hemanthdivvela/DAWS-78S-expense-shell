@@ -50,21 +50,21 @@ else
     echo -e "Expense user already created...$Y SKPPING $N"
 fi
 
-mkdir -p /app
+mkdir -p /app &>>$LOGFILE
 VALIDATA $? "Creating app directory"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOGFILE
 VALIDATA $? "Download backend code"
 
 cd /app
 rm -rf /app/*
-unzip /tmp/backend.zip
+unzip /tmp/backend.zip &>>$LOGFILE
 VALIDATA $? "Extracted backend code"
 
-npm install
+npm install &>>$LOGFILE
 VALIDATA $? "Installing npm dependings"
  
-cp /home/ec2-user/DAWS-78S-expense-shell/backend.service  /etc/systemd/system/backend.service
+cp /home/ec2-user/DAWS-78S-expense-shell/backend.service  /etc/systemd/system/backend.service &>>$LOGFILE
 VALIDATA $? "copied bankend service"
 
 systemctl daemon-reload &>>$LOGFILE
