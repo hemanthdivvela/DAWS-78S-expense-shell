@@ -37,6 +37,12 @@ VALIDATA $? "module enable node"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATA $? "install nodejs."
 
-useradd expense 
-VALIDATA $? "creating expense user"
+id expense
+if [$? -ne 0 ]
+then
+    useradd expense &>>$LOGFILE
+    VALIDATA $? "creating expense user"
+else
+    echo -e "Expense user already created...$Y SKPPING $N"
+fi
 
