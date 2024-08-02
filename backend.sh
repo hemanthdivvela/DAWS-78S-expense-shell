@@ -57,6 +57,7 @@ curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expen
 VALIDATA $? "Download backend code"
 
 cd /app
+rm -rf /app/*
 unzip /tmp/backend.zip
 VALIDATA $? "Extracted backend code"
 
@@ -78,7 +79,7 @@ VALIDATA $? "Enable backend"
 dnf install mysql -y &>>$LOGFILE
 VALIDATA $? "Installing mysql client"
 
-mysql -h db.daws78s.online -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
+mysql -h 172.31.83.120 -uroot -p${mysql_root_password} < /app/schema/backend.sql &>>$LOGFILE
 VALIDATA $? "Schema loading"
 
 systemctl restart backend &>>$LOGFILE
