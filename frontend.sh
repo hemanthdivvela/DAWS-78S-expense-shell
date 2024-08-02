@@ -13,7 +13,7 @@ G="\e[32m"
 N="\e[0m"
 Y="\e[33m"
 
-VALIDATA(){
+VALIDATE(){
     if [ $1 -ne 0 ]
     then 
         echo -e "$2... $R FAILURE $N"
@@ -41,19 +41,19 @@ systemctl start nginx &>>$LOGFILE
 VALIDATE $? "Starting nginx"
 
 rm -rf /usr/share/nginx/html/* &>>$LOGFILE
-VALIDATA $? "Removing exjecting content"
+VALIDATE $? "Removing exjecting content"
 
 curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOGFILE
-VALIDATA $? "Dowland frontend code"
+VALIDATE $? "Dowland frontend code"
 
 cd /usr/share/nginx/html &>>$LOGFILE
 unzip /tmp/frontend.zip &>>$LOGFILE
-VALIDATA $? "extracting frontend code"
+VALIDATE $? "extracting frontend code"
 # check repo and path
 cp /home/ec2-user/DAWS-78S-expense-shell/expense.conf /etc/nginx/default.d/expense.conf &>>$LOGFILE
-VALIDATA $? "Copied expense conf"
+VALIDATE $? "Copied expense conf"
 
 systemctl restart nginx &>>$LOGFILE
-VALIDATA $? "Restarting nginx server"
+VALIDATE $? "Restarting nginx server"
 
 
